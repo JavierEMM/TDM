@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#3B8CDE</color>
     <color name="login_inputs">#D9D9D9</color>
+    <color name="navbar">#E39B2E</color>
+    <color name="navbar_700">#6C4812</color>
 </resources>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "367484229642",
+    "firebase_url": "https://devicemanagment-d05ee-default-rtdb.firebaseio.com",
+    "project_id": "devicemanagment-d05ee",
+    "storage_bucket": "devicemanagment-d05ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367484229642:android:9457b6ec0b1b1afddf27f3",
+        "android_client_info": {
+          "package_name": "pe.edu.pucp.tdm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367484229642-6ofo8qiodelj2rng4rk8647ou782d3ml.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.edu.pucp.tdm",
+            "certificate_hash": "bf5f550fa05e7d2c0bf7bc2a3596d60385666621"
+          }
+        },
+        {
+          "client_id": "367484229642-07nqv3og0fthh7u6ehdcp121d2v08b1t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9ir6w2AoJrj5xNPpW-ZIrRhQfAS0u1PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367484229642-07nqv3og0fthh7u6ehdcp121d2v08b1t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
