@@ -7,7 +7,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label=""
+        android:label="TDM"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TDM"
@@ -64,14 +64,6 @@
         <activity
             android:name=".ti.ListaDispositivosActivity"
             android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".login.RecuperarContraActivity"
-            android:exported="false"
-            android:parentActivityName=".login.ForgotPasswordActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
