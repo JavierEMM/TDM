@@ -62,6 +62,13 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         TextView textCaracteristicas = holder.itemView.findViewById(R.id.textCaracteristicas);
         TextView textIncluye = holder.itemView.findViewById(R.id.textIncluye);
         TextView textStock = holder.itemView.findViewById(R.id.textStock);
+
+        textNombre.setText(d.getNombre());
+        textTipo.setText(d.getTipo());
+        textMarca.setText(d.getMarca());
+        textCaracteristicas.setText(d.getCaracteristicas());
+        textIncluye.setText(d.getIncluye());
+        textStock.setText(d.getStock());
     }
 
     @Override

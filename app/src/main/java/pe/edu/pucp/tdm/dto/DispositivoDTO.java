@@ -3,6 +3,7 @@ package pe.edu.pucp.tdm.dto;
 public class DispositivoDTO {
 
     private String nombre;
+    private String tipo;
     private String marca;
     private String caracteristicas;
     private String incluye;
@@ -14,6 +15,14 @@ public class DispositivoDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getMarca() {
