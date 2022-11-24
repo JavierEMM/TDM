@@ -13,36 +13,41 @@
         android:theme="@style/Theme.TDM"
         tools:targetApi="31">
         <activity
-            android:name=".RechazoActivity"
-            android:exported="false">
+            android:name=".ti.RechazoActivity"
+            android:exported="false"
+            android:parentActivityName=".ti.PedidosActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".UbicacionActivity"
-            android:exported="false">
+            android:name=".ti.UbicacionActivity"
+            android:exported="false"
+            android:parentActivityName=".ti.PedidosActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".EditarDispositivoActivity"
-            android:exported="false">
+            android:name=".ti.EditarDispositivoActivity"
+            android:exported="false"
+            android:parentActivityName=".ti.ListaDispositivosActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AgregarDispositivoActivity"
-            android:exported="false">
+            android:name=".ti.AgregarDispositivoActivity"
+            android:exported="false"
+            android:parentActivityName=".ti.ListaDispositivosActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ti.EditFotoActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ti.PerfilActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
