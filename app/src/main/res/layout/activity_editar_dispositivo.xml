@@ -257,8 +257,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/purple_700"
-                            android:text="Tomar Foto"
-                            app:cornerRadius="50dp"/>
+                            android:text="Foto"
+                            android:textAlignment="center"
+                            app:cornerRadius="50dp"
+                            app:icon="@android:drawable/ic_menu_camera" />
                     </LinearLayout>
 
                     <LinearLayout
