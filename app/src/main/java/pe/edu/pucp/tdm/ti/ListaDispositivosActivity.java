@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +34,7 @@ public class ListaDispositivosActivity extends AppCompatActivity {
 
         firebaseDatabase= FirebaseDatabase.getInstance();
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerDispositivos);
+        RecyclerView recyclerView = findViewById(R.id.recyclerDispositivosCliente);
         ListaDispositivosAdapter adapter = new ListaDispositivosAdapter();
         adapter.setContext(ListaDispositivosActivity.this);
 
