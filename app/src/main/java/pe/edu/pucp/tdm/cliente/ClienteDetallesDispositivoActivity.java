@@ -1,0 +1,17 @@
+package pe.edu.pucp.tdm.cliente;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import pe.edu.pucp.tdm.R;
+
+public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cliente_detalles_dispositivo);
+
+    }
+}

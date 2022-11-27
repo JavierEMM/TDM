@@ -1,6 +1,8 @@
 package pe.edu.pucp.tdm.dto;
 
-public class DispositivoDTO {
+import java.io.Serializable;
+
+public class DispositivoDTO implements Serializable {
 
     private String nombre;
     private String tipo;
