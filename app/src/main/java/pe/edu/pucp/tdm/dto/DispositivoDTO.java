@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public class DispositivoDTO implements Serializable {
 
-    private String nombre;
-    private String tipo;
+    private String nombre;    private String tipo;
     private String marca;
     private String caracteristicas;
     private String incluye;

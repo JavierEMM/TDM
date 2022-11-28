@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.xml.sax.DTDHandler;
 
@@ -20,6 +21,12 @@ public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         DispositivoDTO dispositivo =(DispositivoDTO) intent.getSerializableExtra("dispositivo");
         Log.d("msg","Se recepcionó"+dispositivo.getNombre());
+
+        TextView nombre = findViewById(R.id.textViewNombreDetalles);
+        TextView procesador = findViewById(R.id.textViewAtributo1);
+
+        nombre.setText(dispositivo.getNombre());
+        procesador.setText(dispositivo.getCaracteristicas());
     }
 
 
