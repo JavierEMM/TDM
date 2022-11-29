@@ -10,18 +10,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.admin.AdminMainActivity;
+import pe.edu.pucp.tdm.admin.ListaUsuariosActivity;
+import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +38,30 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){
-            Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
-            startActivity(intent);
-            finish();
+            databaseReference.child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    Intent intent = null;
+                    if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_TI")){
+                        intent = new Intent(LoginActivity.this, ListaDispositivosActivity.class);
+                        Toast.makeText(LoginActivity.this,"TI",Toast.LENGTH_SHORT).show();
+                    }
+                    if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_USER")){
+                        intent = new Intent(LoginActivity.this, ListaUsuariosActivity.class);
+                        Toast.makeText(LoginActivity.this,"USUARIO",Toast.LENGTH_SHORT).show();
+                    }
+                    if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_ADMIN")){
+                        intent = new Intent(LoginActivity.this,AdminMainActivity.class);
+                        Toast.makeText(LoginActivity.this,"ADMIN",Toast.LENGTH_SHORT).show();
+                    }
+                    if(intent != null){
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(LoginActivity.this,"ERROR AL REDIRECCIONAR POR USUARIO",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }else{
             ((Button) findViewById(R.id.btnRegister)).setOnClickListener(view -> {
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -58,9 +86,31 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 if(firebaseAuth.getCurrentUser().isEmailVerified()){
-                                    Intent intent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    databaseReference.child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DataSnapshot dataSnapshot) {
+                                            Intent intent = null;
+                                            if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_TI")){
+                                                intent = new Intent(LoginActivity.this, ListaDispositivosActivity.class);
+                                                Toast.makeText(LoginActivity.this,"TI",Toast.LENGTH_SHORT).show();
+                                            }
+                                            if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_USER")){
+                                                intent = new Intent(LoginActivity.this, ListaUsuariosActivity.class);
+                                                Toast.makeText(LoginActivity.this,"USUARIO",Toast.LENGTH_SHORT).show();
+                                            }
+                                            if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_ADMIN")){
+                                                intent = new Intent(LoginActivity.this,AdminMainActivity.class);
+                                                Toast.makeText(LoginActivity.this,"ADMIN",Toast.LENGTH_SHORT).show();
+                                            }
+                                            if(intent != null){
+                                                startActivity(intent);
+                                                finish();
+                                            }else{
+                                                Toast.makeText(LoginActivity.this,"ERROR AL REDIRECCIONAR POR USUARIO",Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
                                 }else{
                                     Toast.makeText(LoginActivity.this, "Confirme su correo electronico", Toast.LENGTH_SHORT).show();
                                 }
