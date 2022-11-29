@@ -68,7 +68,7 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         textMarca.setText(d.getMarca());
         textCaracteristicas.setText(d.getCaracteristicas());
         textIncluye.setText(d.getIncluye());
-        textStock.setText(d.getStock());
+        textStock.setText(String.valueOf(d.getStock()));
     }
 
     @Override

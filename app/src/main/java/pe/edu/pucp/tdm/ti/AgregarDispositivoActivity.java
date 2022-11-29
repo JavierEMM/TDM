@@ -55,15 +55,15 @@ public class AgregarDispositivoActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-        TextView textNombre = findViewById(R.id.textNombreA);
+        EditText textNombre = findViewById(R.id.textNombreA);
         ArrayList<String> tipos = listaTipos;
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(AgregarDispositivoActivity.this, android.R.layout.simple_spinner_dropdown_item,tipos);
         Spinner spinnerTipo = findViewById(R.id.spinnerTipo);
         spinnerTipo.setAdapter(adapter1);
-        TextView textMarca = findViewById(R.id.textMarcaA);
-        TextView textCaracteristicas = findViewById(R.id.textCaracteristicasA);
-        TextView textIncluye = findViewById(R.id.textIncluyeA);
-        TextView textStock = findViewById(R.id.textStockA);
+        EditText textMarca = findViewById(R.id.textMarcaA);
+        EditText textCaracteristicas = findViewById(R.id.textCaracteristicasA);
+        EditText textIncluye = findViewById(R.id.textIncluyeA);
+        EditText textStock = findViewById(R.id.textStockA);
 
         Button btnAgregar = findViewById(R.id.btnAgregarDispositivo);
         btnAgregar.setOnClickListener(new View.OnClickListener() {
