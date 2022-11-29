@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.admin.AdminMainActivity;
 import pe.edu.pucp.tdm.admin.ListaUsuariosActivity;
+import pe.edu.pucp.tdm.cliente.ClienteListaDispositivosActivity;
 import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this,"TI",Toast.LENGTH_SHORT).show();
                     }
                     if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_USER")){
-                        intent = new Intent(LoginActivity.this, ListaUsuariosActivity.class);
+                        intent = new Intent(LoginActivity.this, ClienteListaDispositivosActivity.class);
                         Toast.makeText(LoginActivity.this,"USUARIO",Toast.LENGTH_SHORT).show();
                     }
                     if(dataSnapshot.child("rol").getValue(String.class).equals("ROL_ADMIN")){
