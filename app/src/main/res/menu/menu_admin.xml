@@ -5,7 +5,7 @@
         <item
             android:id="@+id/btnListarUsuariosTI"
             android:title="Listar Usuarios TI"
-            android:icon="@drawable/ic_baseline_home_24"/>
+            android:icon="@drawable/ic_baseline_devices_24"/>
         <item
             android:id="@+id/btnReportes"
             android:title="Reportes"

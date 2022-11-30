@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -56,20 +56,15 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="290dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textNombreA"
-                        android:layout_width="221dp"
-                        android:layout_height="39dp"
+                        android:layout_width="222dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_short_text_24"
                         android:hint="nombre"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -78,7 +73,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -114,7 +109,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -124,21 +119,17 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="290dp"
                     android:layout_height="match_parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textMarcaA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_device_unknown_24"
                         android:hint="marca"
                         android:inputType="textPersonName" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
@@ -150,7 +141,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -166,15 +157,10 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textCaracteristicasA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_assignment_24"
                         android:hint="caracteristicas"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
@@ -186,7 +172,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -202,15 +188,10 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textIncluyeA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_battery_charging_full_24"
                         android:hint="incluye"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -223,7 +204,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -239,15 +220,10 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textStockA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_exposure_24"
                         android:hint="stock"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

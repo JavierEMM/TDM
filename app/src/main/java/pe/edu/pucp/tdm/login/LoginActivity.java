@@ -29,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
