@@ -149,6 +149,7 @@ public class AgregarDispositivoActivity extends AppCompatActivity {
                     Toast.makeText(AgregarDispositivoActivity.this, "Dispositivo agregado correctamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AgregarDispositivoActivity.this,ListaDispositivosActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -158,6 +159,7 @@ public class AgregarDispositivoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AgregarDispositivoActivity.this,ListaDispositivosActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

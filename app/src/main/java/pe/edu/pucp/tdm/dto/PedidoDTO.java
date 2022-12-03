@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class PedidoDTO implements Serializable {
 
+    private String id;
     private String nombreDispositivo;
     private String motivo;
     private String curso;
@@ -15,6 +16,14 @@ public class PedidoDTO implements Serializable {
     private String estado;
     private String codigoPUCP;
     private String correoPucp;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCorreoPucp() {
         return correoPucp;

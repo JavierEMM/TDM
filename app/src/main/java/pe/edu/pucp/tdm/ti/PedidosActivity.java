@@ -105,6 +105,7 @@ public class PedidosActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot children : snapshot.getChildren() ){
                     PedidoDTO pedido = children.getValue(PedidoDTO.class);
+                    pedido.setId(children.getKey());
                     listaPedidos.add(pedido);
                     adapter.setListaPedidos(listaPedidos);
                     recyclerView.setAdapter(adapter);

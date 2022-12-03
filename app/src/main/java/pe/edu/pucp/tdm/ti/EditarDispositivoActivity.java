@@ -91,6 +91,7 @@ public class EditarDispositivoActivity extends AppCompatActivity {
                     Toast.makeText(EditarDispositivoActivity.this, "Dispositivo editado correctamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(EditarDispositivoActivity.this,ListaDispositivosActivity.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -101,6 +102,7 @@ public class EditarDispositivoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EditarDispositivoActivity.this,ListaDispositivosActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
