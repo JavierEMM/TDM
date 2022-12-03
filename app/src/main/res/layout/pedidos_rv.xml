@@ -44,7 +44,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="62dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -79,11 +79,10 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textMotivo"
-                            android:layout_width="215dp"
+                            android:id="@+id/textMotivoP"
+                            android:layout_width="250dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -124,8 +123,7 @@
                             android:id="@+id/textCurso"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -166,8 +164,7 @@
                             android:id="@+id/textTiempo"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -207,8 +204,7 @@
                             android:id="@+id/textPrograma"
                             android:layout_width="96dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -250,8 +246,7 @@
                             android:id="@+id/textCodigo"
                             android:layout_width="96dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -293,8 +288,7 @@
                             android:id="@+id/textOtros"
                             android:layout_width="96dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -337,8 +331,7 @@
                             android:id="@+id/textEstado"
                             android:layout_width="96dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="TextView" />
+                            android:layout_weight="1" />
 
                     </LinearLayout>
                 </LinearLayout>

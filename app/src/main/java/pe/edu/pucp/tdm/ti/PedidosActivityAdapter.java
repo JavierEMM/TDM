@@ -1,7 +1,6 @@
 package pe.edu.pucp.tdm.ti;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -94,7 +92,7 @@ public class PedidosActivityAdapter extends RecyclerView.Adapter<PedidosActivity
         PedidoDTO p = listaPedidos.get(position);
         holder.pedido = p;
         TextView textNombre = holder.itemView.findViewById(R.id.textNombreP);
-        TextView textMotivo = holder.itemView.findViewById(R.id.textMotivo);
+        TextView textMotivo = holder.itemView.findViewById(R.id.textMotivoP);
         TextView textCurso = holder.itemView.findViewById(R.id.textCurso);
         TextView textTiempo = holder.itemView.findViewById(R.id.textTiempo);
         TextView textPrograma = holder.itemView.findViewById(R.id.textPrograma);
