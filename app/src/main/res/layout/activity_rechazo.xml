@@ -23,7 +23,7 @@
     <LinearLayout
         android:layout_width="363dp"
         android:layout_height="584dp"
-        android:background="#E35A2E"
+        android:background="#E39B2E"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
