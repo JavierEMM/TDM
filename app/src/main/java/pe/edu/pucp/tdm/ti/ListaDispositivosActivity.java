@@ -62,6 +62,15 @@ public class ListaDispositivosActivity extends AppCompatActivity {
 
             }
         });
+        adapter.setEditar(new ListaDispositivosAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                Intent intent = new Intent(ListaDispositivosActivity.this,EditarDispositivoActivity.class);
+                intent.putExtra("position",position);
+                startActivity(intent);
+            }
+        });
+
 
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingDispositivo);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
