@@ -14,6 +14,15 @@ public class PedidoDTO implements Serializable {
     private String otros;
     private String estado;
     private String codigoPUCP;
+    private String correoPucp;
+
+    public String getCorreoPucp() {
+        return correoPucp;
+    }
+
+    public void setCorreoPucp(String correoPucp) {
+        this.correoPucp = correoPucp;
+    }
 
     public String getNombreDispositivo() {
         return nombreDispositivo;
