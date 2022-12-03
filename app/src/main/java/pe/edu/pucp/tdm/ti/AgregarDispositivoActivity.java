@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -84,7 +85,7 @@ public class AgregarDispositivoActivity extends AppCompatActivity {
                 textStock.setText(stockStr);
             }
         });
-        Button btnMenos = findViewById(R.id.btnMenos);
+        Button btnMenos = findViewById(R.id.btnEdit);
         btnMenos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -23,6 +23,7 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
     private ArrayList<DispositivoDTO> listaDispositivos;
     private Context context;
     private OnItemClickListener editar;
+    private OnItemClickListener borrar;
 
     public ArrayList<DispositivoDTO> getListaDispositivos() {
         return listaDispositivos;
@@ -52,15 +53,30 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         void OnItemClick(int position);
     }
 
+    public OnItemClickListener getBorrar() {
+        return borrar;
+    }
+
+    public void setBorrar(OnItemClickListener borrar) {
+        this.borrar = borrar;
+    }
+
     public class DispositivoViewHolder extends RecyclerView.ViewHolder{
         DispositivoDTO dispositivo;
-        public DispositivoViewHolder(@NonNull View itemView, ListaDispositivosAdapter.OnItemClickListener editar){
+        public DispositivoViewHolder(@NonNull View itemView, OnItemClickListener editar, OnItemClickListener borrar){
             super(itemView);
-            Button btneditar = itemView.findViewById(R.id.btnEditar);
-            btneditar.setOnClickListener(new View.OnClickListener() {
+            Button btnEditar = itemView.findViewById(R.id.btnEditar);
+            btnEditar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     editar.OnItemClick(getAdapterPosition());
+                }
+            });
+            Button btnBorrar = itemView.findViewById(R.id.btnBorrar);
+            btnBorrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    borrar.OnItemClick(getAdapterPosition());
                 }
             });
         }
@@ -70,7 +86,7 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
     @Override
     public DispositivoViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(context).inflate(R.layout.listardispositivos_rv, parent,false);
-        return new DispositivoViewHolder(itemView,editar);
+        return new DispositivoViewHolder(itemView,editar,borrar);
     }
 
     @Override

@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.admin.AdminMainActivity;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
 
 public class ListaDispositivosActivity extends AppCompatActivity {
@@ -45,6 +49,7 @@ public class ListaDispositivosActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot children : snapshot.getChildren() ){
                     DispositivoDTO actividad = children.getValue(DispositivoDTO.class);
+                    actividad.setId(children.getKey());
                     listaDispositivo.add(actividad);
                     adapter.setListaDispositivos(listaDispositivo);
                     recyclerView.setAdapter(adapter);
@@ -66,8 +71,26 @@ public class ListaDispositivosActivity extends AppCompatActivity {
             @Override
             public void OnItemClick(int position) {
                 Intent intent = new Intent(ListaDispositivosActivity.this,EditarDispositivoActivity.class);
-                intent.putExtra("position",position);
+                intent.putExtra("dispositivo",adapter.getListaDispositivos().get(position));
                 startActivity(intent);
+            }
+        });
+        adapter.setBorrar(new ListaDispositivosAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                DispositivoDTO d = adapter.getListaDispositivos().get(position);
+                databaseReference.child("dispositivos").child(d.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(ListaDispositivosActivity.this,"Eliminado correctamente",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(ListaDispositivosActivity.this,"Error al eliminar",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                adapter.getListaDispositivos().remove(position);
+                adapter.notifyItemRemoved(position);
             }
         });
 

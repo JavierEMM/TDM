@@ -326,7 +326,7 @@
                             android:orientation="vertical">
 
                             <Button
-                                android:id="@+id/btnMenos"
+                                android:id="@+id/btnEdit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -364,7 +364,7 @@
                             android:orientation="vertical">
 
                             <Button
-                                android:id="@+id/button8"
+                                android:id="@+id/btnCancelarEdit"
                                 android:layout_width="match_parent"
                                 android:layout_height="61dp"
                                 android:backgroundTint="@color/rojo"

@@ -42,8 +42,8 @@ public class AdminMainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle actionBarDrawerToggle;
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();;
-    FirebaseDatabase firebaseDatabase =  FirebaseDatabase.getInstance();;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseDatabase firebaseDatabase =  FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     @Override
