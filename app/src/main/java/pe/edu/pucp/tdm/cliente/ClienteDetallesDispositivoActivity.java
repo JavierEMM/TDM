@@ -65,28 +65,41 @@ public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
                 startActivity(intent);
                 return  true;
             case R.id.submit_solicitud:
-                PedidoDTO pedidoDTO = new PedidoDTO();
-                TextView textViewNombre= findViewById(R.id.textViewNombreDetalles);
-                pedidoDTO.setNombreDispositivo(textViewNombre.toString());
-                TextView textViewCurso = findViewById(R.id.editTextClaveCurso);
-                pedidoDTO.setCurso(textViewCurso.toString());
-                TextView textVieMotivo = findViewById(R.id.editTextTextMotivoSolicitud);
-                pedidoDTO.setMotivo(textVieMotivo.toString());
-                TextView textViewOtros = findViewById(R.id.editTextOtros);
-                pedidoDTO.setOtros(textViewOtros.toString());
-                TextView textViewProgramas = findViewById(R.id.editTextProgramas);
-                pedidoDTO.setProgramas(textViewProgramas.toString());
-                Spinner spinner = findViewById(R.id.spinner);
-                pedidoDTO.setProgramas(spinner.toString());
-                pedidoDTO.setEstado("pendiente");
+
+
                 databaseReference.child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                     @Override
                     public void onSuccess(DataSnapshot dataSnapshot) {
-                            Toast.makeText(ClienteDetallesDispositivoActivity.this,dataSnapshot.child("dni").getValue().toString(),Toast.LENGTH_SHORT).show();
-                            pedidoDTO.setCorreoPucp(dataSnapshot.child("dni").getValue().toString());
+                        PedidoDTO pedidoDTO = new PedidoDTO();
+                        TextView textViewNombre= findViewById(R.id.textViewNombreDetalles);
+                        pedidoDTO.setNombreDispositivo(textViewNombre.getText().toString());
+                        TextView textViewCurso = findViewById(R.id.editTextClaveCurso);
+                        pedidoDTO.setCurso(textViewCurso.getText().toString());
+                        TextView textVieMotivo = findViewById(R.id.editTextTextMotivoSolicitud);
+                        pedidoDTO.setMotivo(textVieMotivo.getText().toString());
+                        TextView textViewOtros = findViewById(R.id.editTextOtros);
+                        pedidoDTO.setOtros(textViewOtros.getText().toString());
+                        TextView textViewProgramas = findViewById(R.id.editTextProgramas);
+                        pedidoDTO.setProgramas(textViewProgramas.getText().toString());
+                        Spinner spinner = findViewById(R.id.spinner);
+                        pedidoDTO.setTiempo(spinner.getSelectedItem().toString()+" dias");
+                        pedidoDTO.setEstado("pendiente");
+                        pedidoDTO.setDni(dataSnapshot.child("dni").getValue().toString());
+                        pedidoDTO.setCodigoPUCP(dataSnapshot.child("codigoPUCP").getValue().toString());
+                        pedidoDTO.setCorreoPucp(dataSnapshot.child("correo").getValue().toString());
+
+                        databaseReference.child("pedidos").push().setValue(pedidoDTO)
+                                .addOnSuccessListener(aVoid->{
+                                    Toast.makeText(ClienteDetallesDispositivoActivity.this,"Solicitud enviada correctamente",Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(ClienteDetallesDispositivoActivity.this,ClienteListaDispositivosActivity.class);
+                                    startActivity(intent);
+
+                                })
+                                .addOnFailureListener(e->{
+                                    Log.d("msg",e.getMessage());
+                                });
                     }
                 });
-
 
 
                 return true;
