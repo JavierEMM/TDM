@@ -1,10 +1,13 @@
 package pe.edu.pucp.tdm.cliente;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import org.xml.sax.DTDHandler;
@@ -23,10 +26,30 @@ public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
         Log.d("msg","Se recepcionó"+dispositivo.getNombre());
 
         TextView nombre = findViewById(R.id.textViewNombreDetalles);
-        TextView procesador = findViewById(R.id.textViewAtributo1);
+        TextView caracteristicas = findViewById(R.id.textViewAtributo1);
 
         nombre.setText(dispositivo.getNombre());
-        procesador.setText(dispositivo.getCaracteristicas());
+        caracteristicas.setText(dispositivo.getCaracteristicas());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_cliente_detalle,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        switch (item.getItemId()){
+            case  R.id.cancel_detail_cliente:
+                Intent intent = new Intent(ClienteDetallesDispositivoActivity.this,ClienteListaDispositivosActivity.class);
+                startActivity(intent);
+                return  true;
+            case R.id.submit_solicitud:
+                Log.d("msg","Se envio el form");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
