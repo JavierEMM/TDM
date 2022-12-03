@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="#3B8CDE"
     tools:context=".ti.AgregarDispositivoActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textHidden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar Dispositivo"
@@ -24,7 +24,7 @@
     <LinearLayout
         android:layout_width="358dp"
         android:layout_height="600dp"
-        android:background="#E35A2E"
+        android:background="#E39B2E"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="19dp"
+            android:layout_height="10dp"
             android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -54,22 +54,18 @@
                     android:orientation="horizontal"></LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/errorNombre"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="290dp"
-                    android:layout_height="match_parent">
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textNombreA"
-                        android:layout_width="221dp"
-                        android:layout_height="39dp"
+                        android:layout_width="222dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_short_text_24"
                         android:hint="nombre"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -78,7 +74,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="37dp"
+            android:layout_height="89dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -86,19 +82,40 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="4dp"
+            <LinearLayout
+                android:layout_width="268dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Tipo"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spinnerTipo"
-                android:layout_width="23dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="2dp"
+                        android:layout_height="39dp"
+                        android:layout_weight="1"
+                        android:text="Tipo"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTipo"
+                        android:layout_width="23dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editTextHidden"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="45dp"
@@ -114,7 +131,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -124,21 +141,17 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="248dp"
                     android:layout_height="match_parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textMarcaA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_device_unknown_24"
                         android:hint="marca"
                         android:inputType="textPersonName" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
@@ -150,7 +163,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -160,21 +173,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="248dp"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textCaracteristicasA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_assignment_24"
                         android:hint="caracteristicas"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
@@ -186,7 +194,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -196,21 +204,16 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="249dp"
                     android:layout_height="match_parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textIncluyeA"
                         android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_battery_charging_full_24"
                         android:hint="incluye"
                         android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -218,12 +221,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="57dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_width="315dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -233,23 +236,47 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="81dp"
                     android:layout_height="match_parent">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textStockA"
-                        android:layout_width="222dp"
-                        android:layout_height="39dp"
+                        android:layout_width="81dp"
+                        android:layout_height="50dp"
                         android:drawableLeft="@drawable/ic_baseline_exposure_24"
+                        android:editable="false"
+                        android:enabled="false"
                         android:hint="stock"
-                        android:inputType="textPersonName" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:inputType="number"
+                        android:text="0" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <Button
+                    android:id="@+id/btnMasEdit"
+                    android:layout_width="24dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/purple_700"
+                    app:icon="@android:drawable/ic_input_add" />
+
+                <LinearLayout
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <Button
+                    android:id="@+id/btnEdit"
+                    android:layout_width="23dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/purple_700"
+                    app:icon="?attr/editTextBackground" />
             </LinearLayout>
 
         </LinearLayout>

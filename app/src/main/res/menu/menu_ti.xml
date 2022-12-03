@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/btnListarUsuariosTI"
-            android:title="Listar Usuarios TI"
+            android:id="@+id/btnListarDispositivos"
+            android:title="Lista Dispositivos"
             android:icon="@drawable/ic_baseline_devices_24"/>
         <item
-            android:id="@+id/btnReportes"
-            android:title="Reportes"
+            android:id="@+id/btnPedidos"
+            android:title="Pedidos de Reserva"
             android:icon="@drawable/ic_baseline_assignment_24"/>
     </group>
     <item android:title="Perfil">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/btnVerPerfil"
+                    android:id="@+id/btnPerfil"
                     android:title="Ver Perfil"
                     android:icon="@drawable/ic_baseline_account_circle_24"/>
                 <item
-                    android:id="@+id/btnLogOut"
+                    android:id="@+id/btnCerrar"
                     android:title="Cerrar Sesion"
                     android:icon="@drawable/ic_baseline_close_24"/>
             </group>

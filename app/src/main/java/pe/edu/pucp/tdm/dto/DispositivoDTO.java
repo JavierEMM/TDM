@@ -4,11 +4,21 @@ import java.io.Serializable;
 
 public class DispositivoDTO implements Serializable {
 
-    private String nombre;    private String tipo;
+    private String id;
+    private String nombre;
+    private String tipo;
     private String marca;
     private String caracteristicas;
     private String incluye;
     private int stock;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;

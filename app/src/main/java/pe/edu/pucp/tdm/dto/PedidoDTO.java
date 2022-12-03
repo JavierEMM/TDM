@@ -1,9 +1,11 @@
 package pe.edu.pucp.tdm.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PedidoDTO {
+public class PedidoDTO implements Serializable {
 
+    private String id;
     private String nombreDispositivo;
     private String motivo;
     private String curso;
@@ -13,6 +15,23 @@ public class PedidoDTO {
     private String otros;
     private String estado;
     private String codigoPUCP;
+    private String correoPucp;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCorreoPucp() {
+        return correoPucp;
+    }
+
+    public void setCorreoPucp(String correoPucp) {
+        this.correoPucp = correoPucp;
+    }
 
     public String getNombreDispositivo() {
         return nombreDispositivo;

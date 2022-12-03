@@ -52,8 +52,6 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity {
                 }
                 if(listaDispositivo.size() == 0){
                     ((TextView) findViewById(R.id.textView18)).setText("No hay dispositivos");
-                }else{
-                    ((TextView) findViewById(R.id.textView18)).setVisibility(View.INVISIBLE);
                 }
             }
 
