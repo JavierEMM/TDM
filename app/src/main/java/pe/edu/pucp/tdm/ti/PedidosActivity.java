@@ -121,6 +121,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void OnItemClick(int position) {
                 Intent intent =  new Intent(PedidosActivity.this, UbicacionActivity.class);
+                intent.putExtra("pedido", adapter.getListaPedidos().get(position));
                 startActivity(intent);
             }
         });
@@ -128,6 +129,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void OnItemClick(int position) {
                 Intent intent =  new Intent(PedidosActivity.this, RechazoActivity.class);
+                intent.putExtra("pedido", adapter.getListaPedidos().get(position));
                 startActivity(intent);
             }
         });

@@ -1,8 +1,9 @@
 package pe.edu.pucp.tdm.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PedidoDTO {
+public class PedidoDTO implements Serializable {
 
     private String nombreDispositivo;
     private String motivo;

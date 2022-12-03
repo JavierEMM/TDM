@@ -131,7 +131,6 @@ public class ListaDispositivosActivity extends AppCompatActivity {
         adapter.setBorrar(new ListaDispositivosAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                Log.d("msg",adapter.getListaDispositivos().get(position).getId());
                 databaseReference.child(adapter.getListaDispositivos().get(position).getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -147,7 +146,6 @@ public class ListaDispositivosActivity extends AppCompatActivity {
             }
         });
 
-
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingDispositivo);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +154,5 @@ public class ListaDispositivosActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }
