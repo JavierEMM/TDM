@@ -1,9 +1,11 @@
 package pe.edu.pucp.tdm.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.cliente.ClienteDetallesDispositivoActivity;
 import pe.edu.pucp.tdm.cliente.ClienteListaDispositivosAdapter;
+import pe.edu.pucp.tdm.cliente.ClientePedidoAceptadoActivity;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
 
@@ -61,6 +65,20 @@ public class ListaClientePedidosAdapter extends RecyclerView.Adapter<ListaClient
         textViewNombre.setText(d.getNombreDispositivo());
         TextView textViewEstado = holder.itemView.findViewById(R.id.textViewPedidosEstado);
         textViewEstado.setText(d.getEstado());
+
+
+        Button button = holder.itemView.findViewById(R.id.button4);
+        if(d.getEstado().equals("pendiente") || d.getEstado().equals("rechazado")){
+            button.setEnabled(false);
+        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ClientePedidoAceptadoActivity.class);
+                intent.putExtra("pedido",d);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

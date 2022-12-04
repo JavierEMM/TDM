@@ -21,6 +21,13 @@
         android:theme="@style/Theme.TDM"
         tools:targetApi="31">
         <activity
+            android:name=".cliente.ClientePedidoAceptadoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".cliente.ClienteListaPedidosActivity"
             android:exported="false">
             <meta-data
