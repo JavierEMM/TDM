@@ -16,6 +16,15 @@ public class PedidoDTO implements Serializable {
     private String estado;
     private String codigoPUCP;
     private String correoPucp;
+    private String userID;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public String getId() {
         return id;

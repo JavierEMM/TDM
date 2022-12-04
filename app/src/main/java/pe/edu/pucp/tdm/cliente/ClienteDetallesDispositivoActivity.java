@@ -87,6 +87,7 @@ public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
                         pedidoDTO.setDni(dataSnapshot.child("dni").getValue().toString());
                         pedidoDTO.setCodigoPUCP(dataSnapshot.child("codigoPUCP").getValue().toString());
                         pedidoDTO.setCorreoPucp(dataSnapshot.child("correo").getValue().toString());
+                        pedidoDTO.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                         databaseReference.child("pedidos").push().setValue(pedidoDTO)
                                 .addOnSuccessListener(aVoid->{
