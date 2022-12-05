@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -63,15 +65,23 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity {
         });
 
 
+    }
 
-        Button button = findViewById(R.id.button5);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ClienteListaDispositivosActivity.this,ClienteListaPedidosActivity.class);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_ti,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+
+        switch (item.getItemId()) {
+            case R.id.btnPedidos:
+                Intent intent = new Intent(ClienteListaDispositivosActivity.this, ClienteListaPedidosActivity.class);
                 startActivity(intent);
-            }
-        });
-
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
