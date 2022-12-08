@@ -5,14 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.config.GlideConfig;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 
 public class ListaTIAdapter extends RecyclerView.Adapter<ListaTIAdapter.TIUserDTOViewHolder> {
@@ -73,8 +79,11 @@ public class ListaTIAdapter extends RecyclerView.Adapter<ListaTIAdapter.TIUserDT
         holder.tiUserDTO=tiUserDTO;
         TextView nombre = holder.itemView.findViewById(R.id.textNombreListaTI);
         TextView dni = holder.itemView.findViewById(R.id.textDNIListaTI);
+        ImageView imageView = holder.itemView.findViewById(R.id.imageVerPerfil);
         nombre.setText("Nombre: "+tiUserDTO.getNombres());
         dni.setText("DNI: "+tiUserDTO.getDni());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("users/"+tiUserDTO.getDni()+"/photo.jpg");
+        Glide.with(context).load(storageReference).into(imageView);
     }
 
     @Override

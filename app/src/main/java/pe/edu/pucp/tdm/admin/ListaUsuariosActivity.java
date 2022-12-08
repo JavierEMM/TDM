@@ -96,10 +96,6 @@ public class ListaUsuariosActivity extends AppCompatActivity {
                         Intent intent4 =  new Intent(ListaUsuariosActivity.this, AdminReportesActivity.class);
                         startActivity(intent4);
                         break;
-                    case R.id.btnVerPerfil:
-                        Intent intent5 =  new Intent(ListaUsuariosActivity.this,AdminPerfilActivity.class);
-                        startActivity(intent5);
-                        break;
                     case R.id.btnLogOut:
                         Toast.makeText(ListaUsuariosActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();

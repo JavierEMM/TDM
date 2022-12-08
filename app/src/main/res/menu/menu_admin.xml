@@ -15,10 +15,6 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/btnVerPerfil"
-                    android:title="Ver Perfil"
-                    android:icon="@drawable/ic_baseline_account_circle_24"/>
-                <item
                     android:id="@+id/btnLogOut"
                     android:title="Cerrar Sesion"
                     android:icon="@drawable/ic_baseline_close_24"/>

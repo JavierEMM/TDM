@@ -107,10 +107,7 @@ public class DetallesAdminActivity extends AppCompatActivity {
                         Intent intent4 =  new Intent(DetallesAdminActivity.this, AdminReportesActivity.class);
                         startActivity(intent4);
                         break;
-                    case R.id.btnVerPerfil:
-                        Intent intent5 =  new Intent(DetallesAdminActivity.this,AdminPerfilActivity.class);
-                        startActivity(intent5);
-                        break;
+
                     case R.id.btnLogOut:
                         Toast.makeText(DetallesAdminActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();

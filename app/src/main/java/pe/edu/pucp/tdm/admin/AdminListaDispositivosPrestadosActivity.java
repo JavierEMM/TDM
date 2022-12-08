@@ -95,10 +95,6 @@ public class AdminListaDispositivosPrestadosActivity extends AppCompatActivity {
                         Intent intent4 =  new Intent(AdminListaDispositivosPrestadosActivity.this, AdminReportesActivity.class);
                         startActivity(intent4);
                         break;
-                    case R.id.btnVerPerfil:
-                        Intent intent5 =  new Intent(AdminListaDispositivosPrestadosActivity.this,AdminPerfilActivity.class);
-                        startActivity(intent5);
-                        break;
                     case R.id.btnLogOut:
                         firebaseAuth.signOut();
                         Intent intent2 =  new Intent(AdminListaDispositivosPrestadosActivity.this, LoginActivity.class);
