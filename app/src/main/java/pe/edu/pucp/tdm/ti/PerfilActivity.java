@@ -12,12 +12,22 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.admin.EditarTIActivity;
+import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
 public class PerfilActivity extends AppCompatActivity {
@@ -26,6 +36,7 @@ public class PerfilActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle actionBarDrawerToggle;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -36,9 +47,28 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ImageView imageView = findViewById(R.id.imageFoto);
+        DatabaseReference databaseReference  = firebaseDatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid());
+        databaseReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO = dataSnapshot.getValue(TIUserDTO.class);
+                Glide.with(PerfilActivity.this).load(FirebaseStorage.getInstance().getReference().child("users/"+tiUserDTO.getDni()+"/photo.jpg"))
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(imageView);
+            }
+        });
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
+
+        //Database
 
         drawerLayout = findViewById(R.id.drawer_layout_ti);
         navigationView = findViewById(R.id.nav_view_ti);

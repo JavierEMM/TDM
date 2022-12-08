@@ -5,10 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -99,6 +104,10 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         TextView textCaracteristicas = holder.itemView.findViewById(R.id.textCaracteristicas);
         TextView textIncluye = holder.itemView.findViewById(R.id.textIncluye);
         TextView textStock = holder.itemView.findViewById(R.id.textStock);
+        ImageView imageView = holder.itemView.findViewById(R.id.imageDispositivo);
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("dispositivos/"+d.getId()+"/photo.jpg");
+        Glide.with(context).load(storageReference).into(imageView);
 
         textNombre.setText(d.getNombre());
         textTipo.setText(d.getTipo());
