@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -47,15 +49,25 @@ public class EditarDispositivoActivity extends AppCompatActivity {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     ImageView imageView = findViewById(R.id.imageView2);
                     Intent intent = result.getData();
-                    if(clipDataAbrirGaleria != null){
-                        int i=0;
-                        for(int j=0;j<i;j++){
-                            clipDataAbrirGaleria.addItem(intent.getClipData().getItemAt(j));
+
+                    if(intent.getClipData() != null){
+                        if(clipDataAbrirGaleria != null){
+                            int i=intent.getClipData().getItemCount();
+                            for(int j=0;j<i;j++){
+                                clipDataAbrirGaleria.addItem(intent.getClipData().getItemAt(j));
+                            }
+                        }else{
+                            clipDataAbrirGaleria = intent.getClipData();
                         }
                     }else{
-                        clipDataAbrirGaleria = intent.getClipData();
+                        ClipData.Item item =  new ClipData.Item(intent.getData());
+                        if(clipDataAbrirGaleria != null){
+                            clipDataAbrirGaleria.addItem(item);
+                        }else{
+                            ClipDescription clipDescription = new ClipDescription(null, new String[]{"image/jpeg"});
+                            clipDataAbrirGaleria =  new ClipData(clipDescription,item);
+                        }
                     }
-                    Glide.with(EditarDispositivoActivity.this).load(intent.getClipData().getItemAt(0).getUri()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
                 }
             }
     );
