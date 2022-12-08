@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,5 +72,23 @@ public class ClienteListaPedidosActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_ti,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+
+        switch (item.getItemId()) {
+            case R.id.btnListarDispositivos:
+                Intent intent = new Intent(ClienteListaPedidosActivity.this, ClienteListaDispositivosActivity.class);
+                startActivity(intent);
+                return true;
+        }
+     return super.onOptionsItemSelected(item);
     }
 }
