@@ -1,16 +1,34 @@
 package pe.edu.pucp.tdm.ti;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
@@ -19,6 +37,47 @@ public class EditarDispositivoActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    ClipData clipDataAbrirGaleria;
+    ArrayList<Uri> clipDataTomarFoto;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageReference = storage.getReference();
+    ActivityResultLauncher<Intent> openDocumentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    ImageView imageView = findViewById(R.id.imageView2);
+                    Intent intent = result.getData();
+                    if(clipDataAbrirGaleria != null){
+                        int i=0;
+                        for(int j=0;j<i;j++){
+                            clipDataAbrirGaleria.addItem(intent.getClipData().getItemAt(j));
+                        }
+                    }else{
+                        clipDataAbrirGaleria = intent.getClipData();
+                    }
+                    Glide.with(EditarDispositivoActivity.this).load(intent.getClipData().getItemAt(0).getUri()).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
+                }
+            }
+    );
+    ActivityResultLauncher<Intent> tomarFoto = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    ImageView imageView = findViewById(R.id.imageDispositivoA);
+                    Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes);
+                    String path =  MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(),bitmap,"val",null);
+                    Uri uri = Uri.parse(path);
+                    if(clipDataTomarFoto != null){
+                        clipDataTomarFoto.add(uri);
+                    }else{
+                        clipDataTomarFoto =  new ArrayList<>();
+                        clipDataTomarFoto.add(uri);
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +86,7 @@ public class EditarDispositivoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         DispositivoDTO dispositivo = (DispositivoDTO) intent.getSerializableExtra("dispositivo");
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
 
@@ -87,15 +147,131 @@ public class EditarDispositivoActivity extends AppCompatActivity {
                     dispositivo.setCaracteristicas(caracteristicas);
                     dispositivo.setIncluye(incluye);
                     dispositivo.setStock(stock);
-                    databaseReference.child("dispositivos").child(dispositivo.getId()).setValue(dispositivo);
-                    Toast.makeText(EditarDispositivoActivity.this, "Dispositivo editado correctamente", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(EditarDispositivoActivity.this,ListaDispositivosActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(clipDataAbrirGaleria != null){
+                        if(clipDataTomarFoto!=null){
+                            int k = clipDataAbrirGaleria.getItemCount();
+                            int x = clipDataTomarFoto.size();
+                            if(k + x>=3){
+                                for(int j = 0; j<k;j++){
+                                    Uri uri = clipDataAbrirGaleria.getItemAt(j).getUri();
+                                    if(j==0){
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo.jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }else{
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo"+j+".jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }
+                                }
+                                for(int j = 0; j<x;j++){
+                                    Uri uri = clipDataTomarFoto.get(j);
+                                    if(j==0){
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo"+k+".jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }else{
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo"+(k+j)+".jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }
+                                }
+                                databaseReference.child("dispositivos").child(dispositivo.getId()).setValue(dispositivo);
+                                Toast.makeText(EditarDispositivoActivity.this, "Dispositivo editado correctamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(EditarDispositivoActivity.this,ListaDispositivosActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(EditarDispositivoActivity.this, "Deben ser más de 3 imagenes", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            int i = clipDataAbrirGaleria.getItemCount();
+                            Log.d("NUMERO",String.valueOf(i));
+                            if(i>=3){
+                                for(int j = 0; j<i;j++){
+                                    Uri uri = clipDataAbrirGaleria.getItemAt(j).getUri();
+                                    if(j==0){
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo.jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }else{
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo"+j+".jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }
+                                }
+                                databaseReference.child("dispositivos").child(dispositivo.getId()).setValue(dispositivo);
+                                Toast.makeText(EditarDispositivoActivity.this, "Dispositivo editado correctamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(EditarDispositivoActivity.this,ListaDispositivosActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(EditarDispositivoActivity.this, "Deben ser más de 3 imagenes", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }else{
+                        if(clipDataTomarFoto != null){
+                            int x = clipDataTomarFoto.size();
+                            if(x>=3){
+                                for(int j = 0; j<x;j++){
+                                    Uri uri = clipDataTomarFoto.get(j);
+                                    if(j==0){
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo"+".jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }else{
+                                        storageReference.child("dispositivos").child(dispositivo.getId() + "/photo"+j+".jpg").putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            }
+                                        });
+                                    }
+                                }
+                                databaseReference.child("dispositivos").child(dispositivo.getId()).setValue(dispositivo);
+                                Toast.makeText(EditarDispositivoActivity.this, "Dispositivo editado correctamente", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(EditarDispositivoActivity.this,ListaDispositivosActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }else{
+                            Toast.makeText(EditarDispositivoActivity.this, "No hay imagen adjunta", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });
-
+        Button btnFoto = findViewById(R.id.button2);
+        btnFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent1.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                intent1.setType("image/jpeg");
+                openDocumentLauncher.launch(intent1);
+            }
+        });
+        Button btnTomarFoto = findViewById(R.id.button3);
+        btnTomarFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                tomarFoto.launch(intent1);
+            }
+        });
         Button btnCancelar = findViewById(R.id.btnCancelarEdit);
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
