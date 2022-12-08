@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
 
 public class PedidosActivityAdapter extends RecyclerView.Adapter<PedidosActivityAdapter.PedidoViewHolder>{
 
     private ArrayList<PedidoDTO> listaPedidos;
+    private ArrayList<PedidoDTO> listaOriginal;
     private Context context;
     private OnItemClickListener aprobar;
     private OnItemClickListener rechazar;
@@ -28,6 +30,24 @@ public class PedidosActivityAdapter extends RecyclerView.Adapter<PedidosActivity
 
     public void setListaPedidos(ArrayList<PedidoDTO> listaPedidos) {
         this.listaPedidos = listaPedidos;
+        listaOriginal = new ArrayList<>();
+        listaOriginal.addAll(listaPedidos);
+    }
+
+    public void filtrado(String txtBuscar){
+        int size = txtBuscar.length();
+        if(size == 0){
+            listaPedidos.clear();
+            listaPedidos.addAll(listaOriginal);
+        }else{
+            listaPedidos.clear();
+            for(PedidoDTO d : listaOriginal){
+                if(d.getNombreDispositivo().toLowerCase().contains(txtBuscar)){
+                    listaPedidos.add(d);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public Context getContext() {

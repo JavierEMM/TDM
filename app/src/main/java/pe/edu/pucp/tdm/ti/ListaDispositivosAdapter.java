@@ -19,6 +19,8 @@ import com.google.firebase.storage.StorageReference;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.adapters.ListaUsuariosAdapter;
@@ -27,6 +29,7 @@ import pe.edu.pucp.tdm.dto.DispositivoDTO;
 public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDispositivosAdapter.DispositivoViewHolder> {
 
     private ArrayList<DispositivoDTO> listaDispositivos;
+    private ArrayList<DispositivoDTO> listaOriginal;
     private Context context;
     private OnItemClickListener editar;
     private OnItemClickListener borrar;
@@ -37,6 +40,26 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
 
     public void setListaDispositivos(ArrayList<DispositivoDTO> listaDispositivos) {
         this.listaDispositivos = listaDispositivos;
+        listaOriginal = new ArrayList<>();
+        listaOriginal.addAll(listaDispositivos);
+    }
+
+    public ListaDispositivosAdapter(){}
+
+    public void filtrado(String txtBuscar){
+        int size = txtBuscar.length();
+        if(size == 0){
+            listaDispositivos.clear();
+            listaDispositivos.addAll(listaOriginal);
+        }else{
+            listaDispositivos.clear();
+            for(DispositivoDTO d : listaOriginal){
+                if(d.getNombre().toLowerCase().contains(txtBuscar)){
+                    listaDispositivos.add(d);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public Context getContext() {
