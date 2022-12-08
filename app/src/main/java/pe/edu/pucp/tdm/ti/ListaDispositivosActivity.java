@@ -14,6 +14,7 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
-public class ListaDispositivosActivity extends AppCompatActivity {
+public class ListaDispositivosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -48,6 +49,7 @@ public class ListaDispositivosActivity extends AppCompatActivity {
     ArrayList<DispositivoDTO> listaDispositivo = new ArrayList<>();
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
+    ListaDispositivosAdapter adapter;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -79,7 +81,8 @@ public class ListaDispositivosActivity extends AppCompatActivity {
             }
         });
 
-
+        SearchView searchView = findViewById(R.id.searchText);
+        searchView.setOnQueryTextListener(ListaDispositivosActivity.this);
         actionBarDrawerToggle = new ActionBarDrawerToggle(ListaDispositivosActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -118,7 +121,7 @@ public class ListaDispositivosActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerDispositivos);
-        ListaDispositivosAdapter adapter = new ListaDispositivosAdapter();
+        adapter = new ListaDispositivosAdapter();
         adapter.setContext(ListaDispositivosActivity.this);
 
         DatabaseReference databaseReference = firebaseDatabase.getReference().child("dispositivos");
@@ -174,5 +177,16 @@ public class ListaDispositivosActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filtrado(s);
+        return false;
     }
 }

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ import pe.edu.pucp.tdm.dto.PedidoDTO;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
-public class PedidosActivity extends AppCompatActivity {
+public class PedidosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -42,6 +43,7 @@ public class PedidosActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     ArrayList<PedidoDTO> listaPedidos = new ArrayList<>();
+    PedidosActivityAdapter adapter;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -112,8 +114,11 @@ public class PedidosActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerPedidos);
-        PedidosActivityAdapter adapter = new PedidosActivityAdapter();
+        adapter = new PedidosActivityAdapter();
         adapter.setContext(PedidosActivity.this);
+
+        SearchView searchView = findViewById(R.id.searchTextPedidos);
+        searchView.setOnQueryTextListener(PedidosActivity.this);
 
         DatabaseReference databaseReference = firebaseDatabase.getReference().child("pedidos");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -151,5 +156,16 @@ public class PedidosActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filtrado(s);
+        return false;
     }
 }
