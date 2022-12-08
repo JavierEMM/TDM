@@ -31,13 +31,14 @@ import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth firebaseAuth;
+    DispositivoDTO dispositivo = new DispositivoDTO();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente_detalles_dispositivo);
         Intent intent = getIntent();
-        DispositivoDTO dispositivo =(DispositivoDTO) intent.getSerializableExtra("dispositivo");
+        dispositivo =(DispositivoDTO) intent.getSerializableExtra("dispositivo");
         Log.d("msg","Se recepcionó"+dispositivo.getNombre());
 
         TextView nombre = findViewById(R.id.textViewNombreDetalles);
@@ -88,10 +89,13 @@ public class ClienteDetallesDispositivoActivity extends AppCompatActivity {
                         pedidoDTO.setCodigoPUCP(dataSnapshot.child("codigoPUCP").getValue().toString());
                         pedidoDTO.setCorreoPucp(dataSnapshot.child("correo").getValue().toString());
                         pedidoDTO.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+                        Log.d("msg","El dispositivo id es "+dispositivo.getId());
                         databaseReference.child("pedidos").push().setValue(pedidoDTO)
                                 .addOnSuccessListener(aVoid->{
                                     Toast.makeText(ClienteDetallesDispositivoActivity.this,"Solicitud enviada correctamente",Toast.LENGTH_SHORT).show();
+                                    dispositivo.setCantPedidos(dispositivo.getCantPedidos()+1);
+                                    Log.d("msg",dispositivo.getId());
+                                    databaseReference.child("dispositivos").child(dispositivo.getId()).setValue(dispositivo);
                                     Intent intent = new Intent(ClienteDetallesDispositivoActivity.this,ClienteListaDispositivosActivity.class);
                                     startActivity(intent);
 

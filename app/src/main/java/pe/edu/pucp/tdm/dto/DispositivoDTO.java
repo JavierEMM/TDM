@@ -11,6 +11,17 @@ public class DispositivoDTO implements Serializable {
     private String caracteristicas;
     private String incluye;
     private int stock;
+    private int cantPedidos;
+
+    public int getCantPedidos() {
+        return cantPedidos;
+    }
+
+    public void setCantPedidos(int cantPedidos) {
+        this.cantPedidos = cantPedidos;
+    }
+
+
 
     public String getId() {
         return id;

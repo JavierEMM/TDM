@@ -29,6 +29,7 @@ public class ClienteListaDispositivosAdapter extends RecyclerView.Adapter<Client
     private ArrayList<DispositivoDTO> listaDispositivos ;
     private Context context;
 
+
     public ArrayList<DispositivoDTO> getListaDispositivos() {
         return listaDispositivos;
     }
