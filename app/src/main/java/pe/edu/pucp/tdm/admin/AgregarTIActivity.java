@@ -1,5 +1,7 @@
 package pe.edu.pucp.tdm.admin;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +9,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
@@ -37,6 +43,21 @@ public class AgregarTIActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
+    FirebaseStorage firebaseStorage;
+    StorageReference storageReference;
+    Uri uri;
+
+    ActivityResultLauncher<Intent> openDocumentLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    uri = result.getData().getData();
+                }
+            }
+    );
+
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
@@ -52,6 +73,11 @@ public class AgregarTIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_tiactivity);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+
+
         DatabaseReference databaseReference  = firebaseDatabase.getReference();
         //NAVIGATION
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -96,11 +122,13 @@ public class AgregarTIActivity extends AppCompatActivity {
                 EditText apellidos = findViewById(R.id.editTextApellido);
                 EditText correo = findViewById(R.id.editTextCorreo);
                 EditText dni = findViewById(R.id.editTextDNI);
+
                 boolean bool = true;
                 if(nombres.getText().toString().trim().isEmpty()){
                     nombres.setError("Ingrese un nombre");
                     bool = false;
                 }
+
                 if(correo.getText().toString().trim().isEmpty()){
                     correo.setError("Ingrese un correo");
                     bool = false;
@@ -112,7 +140,17 @@ public class AgregarTIActivity extends AppCompatActivity {
                 if(dni.getText().toString().trim().isEmpty()){
                     dni.setError("Ingrese un dni");
                     bool=false;
+                }else{
+                    if(uri != null){
+                        storageReference.child("users").child(dni.getText().toString().trim() + "/photo.jpg").putFile(uri)
+                                .addOnSuccessListener(taskSnapshot -> Log.d("msg", "archivo subido exitosamente"))
+                                .addOnFailureListener(e -> Log.d("msg", "error", e.getCause()));
+                    }else{
+                        Toast.makeText(AgregarTIActivity.this, "No hay imagen adjunta", Toast.LENGTH_SHORT).show();
+                        bool=false;
+                    }
                 }
+
                 if(bool){
                     TIUserDTO tiUserDTO =  new TIUserDTO();
                     tiUserDTO.setNombres(nombres.getText().toString());
@@ -152,6 +190,15 @@ public class AgregarTIActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        ((Button) findViewById(R.id.btnSubirFotoTI)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.setType("image/jpeg");
+                openDocumentLauncher.launch(intent);
             }
         });
     }
