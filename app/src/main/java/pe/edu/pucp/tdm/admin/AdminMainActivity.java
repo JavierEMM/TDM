@@ -92,18 +92,16 @@ public class AdminMainActivity extends AppCompatActivity {
                 Log.d("mensaje","ENTRA AQUí");
                 switch (item.getItemId()){
                     case R.id.btnListarUsuariosTI:
-                        Toast.makeText(AdminMainActivity.this, "Listar", Toast.LENGTH_SHORT).show();
-                        Intent intent =  new Intent(AdminMainActivity.this, AdminMainActivity.class);
-                        startActivity(intent);
                         break;
                     case R.id.btnReportes:
-                        Toast.makeText(AdminMainActivity.this, "Reportes", Toast.LENGTH_SHORT).show();
+                        Intent intent4 =  new Intent(AdminMainActivity.this, AdminReportesActivity.class);
+                        startActivity(intent4);
                         break;
                     case R.id.btnVerPerfil:
-                        Toast.makeText(AdminMainActivity.this, "Ver Perfil", Toast.LENGTH_SHORT).show();
+                        Intent intent5 =  new Intent(AdminMainActivity.this,AdminPerfilActivity.class);
+                        startActivity(intent5);
                         break;
                     case R.id.btnLogOut:
-                        Toast.makeText(AdminMainActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
                         Intent intent2 =  new Intent(AdminMainActivity.this, LoginActivity.class);
                         startActivity(intent2);

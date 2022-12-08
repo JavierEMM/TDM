@@ -51,15 +51,17 @@ public class EditarTIActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_tiactivity);
+
         //Obtengo el Usuario
         Intent intent = getIntent();
         TIUserDTO tiUserDTO = (TIUserDTO) intent.getSerializableExtra("ti");
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
 
+        //Obtengo el Usuario
         EditText nombres = findViewById(R.id.editTextNombre);
         nombres.setText(tiUserDTO.getNombres());
         EditText apellidos = findViewById(R.id.editTextApellido);
@@ -67,6 +69,8 @@ public class EditarTIActivity extends AppCompatActivity {
         EditText dni = findViewById(R.id.editTextDNI);
         dni.setText(tiUserDTO.getDni());
         dni.setEnabled(false);
+
+
         //DRAWER
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -78,7 +82,6 @@ public class EditarTIActivity extends AppCompatActivity {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Log.d("mensaje","ENTRA AQUí");
                 switch (item.getItemId()){
                     case R.id.btnListarUsuariosTI:
                         Toast.makeText(EditarTIActivity.this, "Listar", Toast.LENGTH_SHORT).show();
@@ -87,9 +90,12 @@ public class EditarTIActivity extends AppCompatActivity {
                         break;
                     case R.id.btnReportes:
                         Toast.makeText(EditarTIActivity.this, "Reportes", Toast.LENGTH_SHORT).show();
+                        Intent intent4 =  new Intent(EditarTIActivity.this, AdminReportesActivity.class);
+                        startActivity(intent4);
                         break;
                     case R.id.btnVerPerfil:
-                        Toast.makeText(EditarTIActivity.this, "Ver Perfil", Toast.LENGTH_SHORT).show();
+                        Intent intent5 =  new Intent(EditarTIActivity.this,AdminPerfilActivity.class);
+                        startActivity(intent5);
                         break;
                     case R.id.btnLogOut:
                         Toast.makeText(EditarTIActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
@@ -105,33 +111,33 @@ public class EditarTIActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btnAceptarEditarTI)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            databaseReference.child("users").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                @Override
-                public void onSuccess(DataSnapshot dataSnapshot) {
-                    for(DataSnapshot children :dataSnapshot.getChildren() ){
-                        if(children.child("rol").getValue(String.class).equals("ROL_TI")){
-                            TIUserDTO tiUserDTO1 = children.getValue(TIUserDTO.class);
-                            if(tiUserDTO.getDni().equals(tiUserDTO1.getDni())){
-                                String nombreStr = nombres.getText().toString();
-                                String apellidoStr = apellidos.getText().toString();
-                                tiUserDTO.setNombres(nombreStr);
-                                tiUserDTO.setApellidos(apellidoStr);
-                                databaseReference.child("users").child(children.getKey()).setValue(tiUserDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            Intent intent1 = new Intent(EditarTIActivity.this,AdminMainActivity.class);
-                                            startActivity(intent1);
-                                        }else{
-                                            Toast.makeText(EditarTIActivity.this,"Error al editar",Toast.LENGTH_SHORT).show();
+                databaseReference.child("users").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot){
+                        for(DataSnapshot children :dataSnapshot.getChildren()){
+                            if(children.child("rol").getValue(String.class).equals("ROL_TI")){
+                                TIUserDTO tiUserDTO1 = children.getValue(TIUserDTO.class);
+                                if(tiUserDTO.getDni().equals(tiUserDTO1.getDni())){
+                                    String nombreStr = nombres.getText().toString();
+                                    String apellidoStr = apellidos.getText().toString();
+                                    tiUserDTO.setNombres(nombreStr);
+                                    tiUserDTO.setApellidos(apellidoStr);
+                                    databaseReference.child("users").child(children.getKey()).setValue(tiUserDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                Intent intent1 = new Intent(EditarTIActivity.this,AdminMainActivity.class);
+                                                startActivity(intent1);
+                                            }else{
+                                                Toast.makeText(EditarTIActivity.this,"Error al editar",Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
             }
         });
     }

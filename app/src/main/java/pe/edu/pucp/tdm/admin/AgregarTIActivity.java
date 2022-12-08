@@ -3,6 +3,7 @@ package pe.edu.pucp.tdm.admin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
@@ -66,15 +67,16 @@ public class AgregarTIActivity extends AppCompatActivity {
                 Log.d("mensaje","ENTRA AQUí");
                 switch (item.getItemId()){
                     case R.id.btnListarUsuariosTI:
-                        Toast.makeText(AgregarTIActivity.this, "Listar", Toast.LENGTH_SHORT).show();
                         Intent intent =  new Intent(AgregarTIActivity.this, ListaUsuariosActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.btnReportes:
-                        Toast.makeText(AgregarTIActivity.this, "Reportes", Toast.LENGTH_SHORT).show();
+                        Intent intent4 =  new Intent(AgregarTIActivity.this, AdminReportesActivity.class);
+                        startActivity(intent4);
                         break;
                     case R.id.btnVerPerfil:
-                        Toast.makeText(AgregarTIActivity.this, "Ver Perfil", Toast.LENGTH_SHORT).show();
+                        Intent intent5 =  new Intent(AgregarTIActivity.this,AdminPerfilActivity.class);
+                        startActivity(intent5);
                         break;
                     case R.id.btnLogOut:
                         Toast.makeText(AgregarTIActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
@@ -152,5 +154,13 @@ public class AgregarTIActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
 }

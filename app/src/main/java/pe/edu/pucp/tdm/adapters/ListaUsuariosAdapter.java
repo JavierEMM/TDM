@@ -18,7 +18,7 @@ import pe.edu.pucp.tdm.dto.UsuarioDTO;
 
 public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.UsuarioDTOViewHolder> {
 
-    private ArrayList<UsuarioDTO> usuarioDTOS;
+    private ArrayList<UsuarioDTO> usuarioDTOS = new ArrayList<>();
     private Context context;
     private OnItemClickListener detalles;
 

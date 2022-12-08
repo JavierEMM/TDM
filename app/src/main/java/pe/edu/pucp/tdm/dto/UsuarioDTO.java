@@ -1,6 +1,8 @@
 package pe.edu.pucp.tdm.dto;
 
-public class UsuarioDTO {
+import java.io.Serializable;
+
+public class UsuarioDTO implements Serializable {
 
     private String codigoPUCP;
     private String correo;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.AdminMainActivity"
+    tools:context=".admin.DetallesAdminActivity"
     android:id="@+id/drawer_layout">
 
     <ScrollView
@@ -18,31 +18,25 @@
             android:layout_margin="20dp"
             android:gravity="center">
             <TextView
+                android:id="@+id/textDispositivoUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LISTA USUARIOS TI"
+                android:text="LISTA DISPOSITIVOS"
                 android:textStyle="bold"
                 android:textSize="30sp"
                 android:layout_margin="20dp"
                 android:textAlignment="center"/>
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detalles"
+                android:backgroundTint="@color/verde"/>
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleViewTI"
+                android:id="@+id/recycleViewDispositivosUser"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/border" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end">
-                <Button
-                    android:id="@+id/btnAgregarTIAdminLista"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/verde"
-                    android:text="Agregar TI"/>
-            </LinearLayout>
+                android:background="@drawable/border"/>
 
         </LinearLayout>
     </ScrollView>
@@ -55,6 +49,5 @@
         android:id="@+id/nav_view"
         android:layout_gravity="start">
     </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

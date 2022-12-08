@@ -5,35 +5,26 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 import pe.edu.pucp.tdm.R;
-import pe.edu.pucp.tdm.adapters.ListaUsuariosAdapter;
-import pe.edu.pucp.tdm.dto.TIUserDTO;
-import pe.edu.pucp.tdm.dto.UsuarioDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
-public class ListaUsuariosActivity extends AppCompatActivity {
+public class AdminEditarFotoPerfilActivity extends AppCompatActivity {
 
-    ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
-    ArrayList<UsuarioDTO> usuarioDTOS = new ArrayList<>();
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -48,35 +39,15 @@ public class ListaUsuariosActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        databaseReference.child("users").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                usuarioDTOS.clear();
-                for(DataSnapshot children : dataSnapshot.getChildren()){
-                    if(children.child("rol").getValue(String.class).equals("ROL_USER")){
-                        UsuarioDTO usuarioDTO = children.getValue(UsuarioDTO.class);
-                        usuarioDTOS.add(usuarioDTO);
-                    }
-                }
-                adapter.setList(usuarioDTOS);
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_usuarios_admin);
+        setContentView(R.layout.activity_admin_editar_foto_perfil);
 
-        //DRAWER
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(ListaUsuariosActivity.this,drawerLayout,R.string.open,R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(AdminEditarFotoPerfilActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -87,23 +58,23 @@ public class ListaUsuariosActivity extends AppCompatActivity {
                 Log.d("mensaje","ENTRA AQUí");
                 switch (item.getItemId()){
                     case R.id.btnListarUsuariosTI:
-                        Toast.makeText(ListaUsuariosActivity.this, "Listar", Toast.LENGTH_SHORT).show();
-                        Intent intent =  new Intent(ListaUsuariosActivity.this, AdminMainActivity.class);
+                        Toast.makeText(AdminEditarFotoPerfilActivity.this, "Listar", Toast.LENGTH_SHORT).show();
+                        Intent intent =  new Intent(AdminEditarFotoPerfilActivity.this, AdminMainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.btnReportes:
-                        Toast.makeText(ListaUsuariosActivity.this, "Reportes", Toast.LENGTH_SHORT).show();
-                        Intent intent4 =  new Intent(ListaUsuariosActivity.this, AdminReportesActivity.class);
+                        Toast.makeText(AdminEditarFotoPerfilActivity.this, "Reportes", Toast.LENGTH_SHORT).show();
+                        Intent intent4 =  new Intent(AdminEditarFotoPerfilActivity.this, AdminReportesActivity.class);
                         startActivity(intent4);
                         break;
                     case R.id.btnVerPerfil:
-                        Intent intent5 =  new Intent(ListaUsuariosActivity.this,AdminPerfilActivity.class);
+                        Intent intent5 =  new Intent(AdminEditarFotoPerfilActivity.this,AdminPerfilActivity.class);
                         startActivity(intent5);
                         break;
                     case R.id.btnLogOut:
-                        Toast.makeText(ListaUsuariosActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminEditarFotoPerfilActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
-                        Intent intent2 =  new Intent(ListaUsuariosActivity.this, LoginActivity.class);
+                        Intent intent2 =  new Intent(AdminEditarFotoPerfilActivity.this, LoginActivity.class);
                         startActivity(intent2);
                         finish();
                         break;
@@ -111,19 +82,12 @@ public class ListaUsuariosActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        //VISTA
-        adapter.setContext(ListaUsuariosActivity.this);
-        RecyclerView recyclerView = findViewById(R.id.recycleViewUsuarios);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ListaUsuariosActivity.this));
-        adapter.setDetalles(new ListaUsuariosAdapter.OnItemClickListener() {
+        ((Button) findViewById(R.id.btnCancelarEditarPerfil)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void OnItemClick(int position) {
-                Intent intent = new Intent(ListaUsuariosActivity.this,DetallesAdminActivity.class);
-                intent.putExtra("usuario",adapter.getList().get(position));
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminEditarFotoPerfilActivity.this,AdminPerfilActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

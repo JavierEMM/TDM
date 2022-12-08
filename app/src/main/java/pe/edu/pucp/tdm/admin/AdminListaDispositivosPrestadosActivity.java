@@ -3,7 +3,6 @@ package pe.edu.pucp.tdm.admin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,15 +25,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
-import pe.edu.pucp.tdm.adapters.ListaUsuariosAdapter;
-import pe.edu.pucp.tdm.dto.TIUserDTO;
+import pe.edu.pucp.tdm.adapters.ListaDispositivosAdminAdapter;
+import pe.edu.pucp.tdm.adapters.ListaDispositivosUserAdapter;
+import pe.edu.pucp.tdm.dto.PedidoDTO;
 import pe.edu.pucp.tdm.dto.UsuarioDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
-public class ListaUsuariosActivity extends AppCompatActivity {
+public class AdminListaDispositivosPrestadosActivity extends AppCompatActivity {
 
-    ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
-    ArrayList<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+
+    ListaDispositivosAdminAdapter adapter = new ListaDispositivosAdminAdapter();
+    ArrayList<PedidoDTO> pedidoDTOS = new ArrayList<>();
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -48,35 +50,34 @@ public class ListaUsuariosActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        databaseReference.child("users").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-
+        databaseReference.child("pedidos").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                usuarioDTOS.clear();
+                pedidoDTOS.clear();
                 for(DataSnapshot children : dataSnapshot.getChildren()){
-                    if(children.child("rol").getValue(String.class).equals("ROL_USER")){
-                        UsuarioDTO usuarioDTO = children.getValue(UsuarioDTO.class);
-                        usuarioDTOS.add(usuarioDTO);
-                    }
+                    PedidoDTO pedidoDTO = children.getValue(PedidoDTO.class);
+                    pedidoDTOS.add(pedidoDTO);
                 }
-                adapter.setList(usuarioDTOS);
+                adapter.setList(pedidoDTOS);
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_usuarios_admin);
+        setContentView(R.layout.activity_admin_lista_dispositivos_prestados);
 
-        //DRAWER
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(ListaUsuariosActivity.this,drawerLayout,R.string.open,R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(AdminListaDispositivosPrestadosActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -87,23 +88,20 @@ public class ListaUsuariosActivity extends AppCompatActivity {
                 Log.d("mensaje","ENTRA AQUí");
                 switch (item.getItemId()){
                     case R.id.btnListarUsuariosTI:
-                        Toast.makeText(ListaUsuariosActivity.this, "Listar", Toast.LENGTH_SHORT).show();
-                        Intent intent =  new Intent(ListaUsuariosActivity.this, AdminMainActivity.class);
+                        Intent intent =  new Intent(AdminListaDispositivosPrestadosActivity.this, AdminMainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.btnReportes:
-                        Toast.makeText(ListaUsuariosActivity.this, "Reportes", Toast.LENGTH_SHORT).show();
-                        Intent intent4 =  new Intent(ListaUsuariosActivity.this, AdminReportesActivity.class);
+                        Intent intent4 =  new Intent(AdminListaDispositivosPrestadosActivity.this, AdminReportesActivity.class);
                         startActivity(intent4);
                         break;
                     case R.id.btnVerPerfil:
-                        Intent intent5 =  new Intent(ListaUsuariosActivity.this,AdminPerfilActivity.class);
+                        Intent intent5 =  new Intent(AdminListaDispositivosPrestadosActivity.this,AdminPerfilActivity.class);
                         startActivity(intent5);
                         break;
                     case R.id.btnLogOut:
-                        Toast.makeText(ListaUsuariosActivity.this, "LogOut", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
-                        Intent intent2 =  new Intent(ListaUsuariosActivity.this, LoginActivity.class);
+                        Intent intent2 =  new Intent(AdminListaDispositivosPrestadosActivity.this, LoginActivity.class);
                         startActivity(intent2);
                         finish();
                         break;
@@ -112,27 +110,10 @@ public class ListaUsuariosActivity extends AppCompatActivity {
             }
         });
 
-
-        //VISTA
-        adapter.setContext(ListaUsuariosActivity.this);
-        RecyclerView recyclerView = findViewById(R.id.recycleViewUsuarios);
+        adapter.setContext(AdminListaDispositivosPrestadosActivity.this);
+        RecyclerView recyclerView = findViewById(R.id.recycleViewDispositivosUser);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ListaUsuariosActivity.this));
-        adapter.setDetalles(new ListaUsuariosAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-                Intent intent = new Intent(ListaUsuariosActivity.this,DetallesAdminActivity.class);
-                intent.putExtra("usuario",adapter.getList().get(position));
-                startActivity(intent);
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(AdminListaDispositivosPrestadosActivity.this));
     }
-    @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
-        }
-    }
+
 }
