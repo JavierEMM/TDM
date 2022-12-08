@@ -17,6 +17,8 @@ public class PedidoDTO implements Serializable {
     private String codigoPUCP;
     private String correoPucp;
     private String userID;
+    private String latitud;
+    private String longitud;
 
     public String getUserID() {
         return userID;
@@ -112,5 +114,21 @@ public class PedidoDTO implements Serializable {
 
     public void setCodigoPUCP(String codigoPUCP) {
         this.codigoPUCP = codigoPUCP;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
 }

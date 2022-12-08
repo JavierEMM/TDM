@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -107,7 +108,7 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         ImageView imageView = holder.itemView.findViewById(R.id.imageDispositivo);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("dispositivos/"+d.getId()+"/photo.jpg");
-        Glide.with(context).load(storageReference).into(imageView);
+        Glide.with(context).load(storageReference).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(imageView);
 
         textNombre.setText(d.getNombre());
         textTipo.setText(d.getTipo());

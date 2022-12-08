@@ -18,13 +18,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -78,10 +81,26 @@ public class AgregarTIActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
 
 
+
         DatabaseReference databaseReference  = firebaseDatabase.getReference();
         //NAVIGATION
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        View view =navigationView.getHeaderView(0);
+        TextView nombre =  view.findViewById(R.id.nombreNav);
+        TextView correo = view.findViewById(R.id.correoNav);
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO =  dataSnapshot.getValue(TIUserDTO.class);
+                nombre.setText(tiUserDTO.getNombres());
+                correo.setText(tiUserDTO.getCorreo());
+            }
+        });
+
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(AgregarTIActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();

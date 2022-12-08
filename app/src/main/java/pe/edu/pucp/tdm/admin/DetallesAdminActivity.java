@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.adapters.ListaDispositivosUserAdapter;
 import pe.edu.pucp.tdm.adapters.ListaUsuariosAdapter;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
+import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.dto.UsuarioDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
@@ -87,6 +89,20 @@ public class DetallesAdminActivity extends AppCompatActivity {
         //DRAWER
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        View view =navigationView.getHeaderView(0);
+        TextView nombre =  view.findViewById(R.id.nombreNav);
+        TextView correo = view.findViewById(R.id.correoNav);
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO =  dataSnapshot.getValue(TIUserDTO.class);
+                nombre.setText(tiUserDTO.getNombres());
+                correo.setText(tiUserDTO.getCorreo());
+            }
+        });
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(DetallesAdminActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();

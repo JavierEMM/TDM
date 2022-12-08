@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -32,8 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
-import pe.edu.pucp.tdm.admin.AdminMainActivity;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
+import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
 public class ListaDispositivosActivity extends AppCompatActivity {
@@ -61,9 +63,23 @@ public class ListaDispositivosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_dispositivos);
 
         firebaseDatabase= FirebaseDatabase.getInstance();
-
         drawerLayout = findViewById(R.id.drawer_layout_ti);
         navigationView = findViewById(R.id.nav_view_ti);
+
+        View view =navigationView.getHeaderView(0);
+        TextView nombre =  view.findViewById(R.id.nombreNav);
+        TextView correo = view.findViewById(R.id.correoNav);
+
+        firebaseDatabase.getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO =  dataSnapshot.getValue(TIUserDTO.class);
+                nombre.setText(tiUserDTO.getNombres());
+                correo.setText(tiUserDTO.getCorreo());
+            }
+        });
+
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(ListaDispositivosActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
