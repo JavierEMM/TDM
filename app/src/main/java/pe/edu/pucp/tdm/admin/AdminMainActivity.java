@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +36,9 @@ import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.adapters.ListaTIAdapter;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
+import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 
-public class AdminMainActivity extends AppCompatActivity {
+public class AdminMainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     ListaTIAdapter adapter =  new ListaTIAdapter();
     ArrayList<TIUserDTO> tiUserDTOS = new ArrayList<>();
@@ -122,6 +124,8 @@ public class AdminMainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        SearchView searchView = findViewById(R.id.searchTextUsuarios);
+        searchView.setOnQueryTextListener(AdminMainActivity.this);
         //VISTA
         adapter.setContext(AdminMainActivity.this);
         RecyclerView recyclerView = findViewById(R.id.recycleViewTI);
@@ -183,5 +187,16 @@ public class AdminMainActivity extends AppCompatActivity {
         }else{
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filtrado(s);
+        return false;
     }
 }

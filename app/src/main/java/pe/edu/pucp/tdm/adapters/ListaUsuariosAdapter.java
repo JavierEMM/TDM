@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.dto.UsuarioDTO;
 
 public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdapter.UsuarioDTOViewHolder> {
 
     private ArrayList<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+    private ArrayList<UsuarioDTO> listaOriginal;
     private Context context;
     private OnItemClickListener detalles;
 
@@ -32,6 +34,22 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
+    }
+
+    public void filtrado(String txtBuscar){
+        int size = txtBuscar.length();
+        if(size == 0){
+            usuarioDTOS.clear();
+            usuarioDTOS.addAll(listaOriginal);
+        }else{
+            usuarioDTOS.clear();
+            for(UsuarioDTO d : listaOriginal){
+                if(d.getCodigoPUCP().toLowerCase().contains(txtBuscar)){
+                    usuarioDTOS.add(d);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public class UsuarioDTOViewHolder extends RecyclerView.ViewHolder{
@@ -76,6 +94,8 @@ public class ListaUsuariosAdapter extends RecyclerView.Adapter<ListaUsuariosAdap
 
     public void setList(ArrayList<UsuarioDTO> list) {
         this.usuarioDTOS = list;
+        listaOriginal = new ArrayList<>();
+        listaOriginal.addAll(list);
     }
 
     public Context getContext() {

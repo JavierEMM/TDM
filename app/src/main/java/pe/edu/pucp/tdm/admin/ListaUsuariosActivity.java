@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +32,9 @@ import pe.edu.pucp.tdm.adapters.ListaUsuariosAdapter;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.dto.UsuarioDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
+import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 
-public class ListaUsuariosActivity extends AppCompatActivity {
+public class ListaUsuariosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     ListaUsuariosAdapter adapter = new ListaUsuariosAdapter();
     ArrayList<UsuarioDTO> usuarioDTOS = new ArrayList<>();
@@ -92,6 +94,8 @@ public class ListaUsuariosActivity extends AppCompatActivity {
             }
         });
 
+        SearchView searchView = findViewById(R.id.searchTextUsuarios2);
+        searchView.setOnQueryTextListener(ListaUsuariosActivity.this);
         actionBarDrawerToggle = new ActionBarDrawerToggle(ListaUsuariosActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -146,5 +150,16 @@ public class ListaUsuariosActivity extends AppCompatActivity {
         }else{
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filtrado(s);
+        return false;
     }
 }

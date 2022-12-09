@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
 
 public class ListaDispositivosAdminAdapter extends RecyclerView.Adapter<ListaDispositivosAdminAdapter.PedidoDTOViewHolder> {
 
     private ArrayList<PedidoDTO> pedidoDTOS = new ArrayList<>();
+    private ArrayList<PedidoDTO> listaOriginal;
     private Context context;
 
     public class PedidoDTOViewHolder extends RecyclerView.ViewHolder{
@@ -63,6 +65,8 @@ public class ListaDispositivosAdminAdapter extends RecyclerView.Adapter<ListaDis
 
     public void setList(ArrayList<PedidoDTO> list) {
         this.pedidoDTOS = list;
+        listaOriginal = new ArrayList<>();
+        listaOriginal.addAll(list);
     }
 
     public Context getContext() {
@@ -71,5 +75,21 @@ public class ListaDispositivosAdminAdapter extends RecyclerView.Adapter<ListaDis
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public void filtrado(String txtBuscar){
+        int size = txtBuscar.length();
+        if(size == 0){
+            pedidoDTOS.clear();
+            pedidoDTOS.addAll(listaOriginal);
+        }else{
+            pedidoDTOS.clear();
+            for(PedidoDTO d : listaOriginal){
+                if(d.getNombreDispositivo().toLowerCase().contains(txtBuscar)){
+                    pedidoDTOS.add(d);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

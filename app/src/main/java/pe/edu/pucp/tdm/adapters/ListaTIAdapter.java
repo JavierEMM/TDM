@@ -19,11 +19,13 @@ import java.util.ArrayList;
 
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.config.GlideConfig;
+import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.TIUserDTO;
 
 public class ListaTIAdapter extends RecyclerView.Adapter<ListaTIAdapter.TIUserDTOViewHolder> {
 
     private ArrayList<TIUserDTO> list = new ArrayList<>();
+    private ArrayList<TIUserDTO> listaOriginal;
     private Context context;
     private OnItemClickListener editar;
     private OnItemClickListener borrar;
@@ -39,6 +41,22 @@ public class ListaTIAdapter extends RecyclerView.Adapter<ListaTIAdapter.TIUserDT
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
+    }
+
+    public void filtrado(String txtBuscar){
+        int size = txtBuscar.length();
+        if(size == 0){
+            list.clear();
+            list.addAll(listaOriginal);
+        }else{
+            list.clear();
+            for(TIUserDTO d : listaOriginal){
+                if(d.getNombres().toLowerCase().contains(txtBuscar)){
+                    list.add(d);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public void setEditar(OnItemClickListener editar) {
@@ -97,6 +115,8 @@ public class ListaTIAdapter extends RecyclerView.Adapter<ListaTIAdapter.TIUserDT
 
     public void setList(ArrayList<TIUserDTO> list) {
         this.list = list;
+        listaOriginal = new ArrayList<>();
+        listaOriginal.addAll(list);
     }
 
     public Context getContext() {

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -72,10 +73,32 @@ public class PerfilActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout_ti);
         navigationView = findViewById(R.id.nav_view_ti);
+        View view =navigationView.getHeaderView(0);
+        TextView nombre =  view.findViewById(R.id.nombreNav);
+        TextView correo = view.findViewById(R.id.correoNav);
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO =  dataSnapshot.getValue(TIUserDTO.class);
+                nombre.setText(tiUserDTO.getNombres());
+                correo.setText(tiUserDTO.getCorreo());
+            }
+        });
         actionBarDrawerToggle = new ActionBarDrawerToggle(PerfilActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView nombret = findViewById(R.id.textNombreU);
+        TextView dni = findViewById(R.id.textDniU);
+        FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO =  dataSnapshot.getValue(TIUserDTO.class);
+                nombret.setText(tiUserDTO.getNombres());
+                dni.setText(tiUserDTO.getDni());
+            }
+        });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override

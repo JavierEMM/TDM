@@ -84,18 +84,18 @@ public class PedidosActivityAdapter extends RecyclerView.Adapter<PedidosActivity
         public PedidoViewHolder(@NonNull View itemView, OnItemClickListener aprobar, OnItemClickListener rechazar){
             super(itemView);
             Button btnAprobar = itemView.findViewById(R.id.btnAprobar);
-            btnAprobar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    aprobar.OnItemClick(getAdapterPosition());
-                }
-            });
             Button btnRechazar = itemView.findViewById(R.id.btnRechazar);
+            btnAprobar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        aprobar.OnItemClick(getAdapterPosition());
+                    }
+            });
             btnRechazar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rechazar.OnItemClick(getAdapterPosition());
-                }
+                    @Override
+                    public void onClick(View view) {
+                        rechazar.OnItemClick(getAdapterPosition());
+                    }
             });
         }
     }

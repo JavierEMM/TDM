@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
+import pe.edu.pucp.tdm.dto.TIUserDTO;
 import pe.edu.pucp.tdm.login.LoginActivity;
 
 public class PedidosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
@@ -60,6 +62,18 @@ public class PedidosActivity extends AppCompatActivity implements SearchView.OnQ
 
         drawerLayout = findViewById(R.id.drawer_layout_ti);
         navigationView = findViewById(R.id.nav_view_ti);
+        View view =navigationView.getHeaderView(0);
+        TextView nombre =  view.findViewById(R.id.nombreNav);
+        TextView correo = view.findViewById(R.id.correoNav);
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                TIUserDTO tiUserDTO =  dataSnapshot.getValue(TIUserDTO.class);
+                nombre.setText(tiUserDTO.getNombres());
+                correo.setText(tiUserDTO.getCorreo());
+            }
+        });
         actionBarDrawerToggle = new ActionBarDrawerToggle(PedidosActivity.this,drawerLayout,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -126,17 +140,26 @@ public class PedidosActivity extends AppCompatActivity implements SearchView.OnQ
         adapter.setAprobar(new PedidosActivityAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                Intent intent =  new Intent(PedidosActivity.this, UbicacionActivity.class);
-                intent.putExtra("pedido", adapter.getListaPedidos().get(position));
-                startActivity(intent);
+                if(adapter.getListaPedidos().get(position).getEstado().equals("pendiente")){
+                    Intent intent =  new Intent(PedidosActivity.this, UbicacionActivity.class);
+                    intent.putExtra("pedido", adapter.getListaPedidos().get(position));
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(PedidosActivity.this, "No se puede aceptar un pedido que no este en pendiente", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         adapter.setRechazar(new PedidosActivityAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                Intent intent =  new Intent(PedidosActivity.this, RechazoActivity.class);
-                intent.putExtra("pedido", adapter.getListaPedidos().get(position));
-                startActivity(intent);
+                if(adapter.getListaPedidos().get(position).getEstado().equals("pendiente")){
+                    Intent intent =  new Intent(PedidosActivity.this, RechazoActivity.class);
+                    intent.putExtra("pedido", adapter.getListaPedidos().get(position));
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(PedidosActivity.this, "No se puede rechazar un pedido que no este en pendiente", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

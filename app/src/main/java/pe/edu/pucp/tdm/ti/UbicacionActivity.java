@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,14 +72,20 @@ public class UbicacionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 pedido.setLatitud(String.valueOf(selectedLat));
                 pedido.setLatitud(String.valueOf(selectedLong));
+                pedido.setEstado("aceptado");
                 databaseReference.child("pedidos").child(pedido.getId()).setValue(pedido).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(UbicacionActivity.this,"El pedido ha sido aprobado correctamente",Toast.LENGTH_SHORT).show();
-                        Intent intent =  new Intent(UbicacionActivity.this, PedidosActivity.class);
+                        Intent intent = new Intent(Intent.ACTION_SENDTO);
+                        intent.setData(Uri.parse("mailto:"));
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {pedido.getCorreoPucp()});
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Aceptacion de solicitud");
+                        intent.putExtra(Intent.EXTRA_TEXT, "La dirección de recojo está indicada en su cuenta");
                         startActivity(intent);
+                        finish();
                     }
                 });
+
             }
         });
 

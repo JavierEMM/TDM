@@ -44,8 +44,6 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         listaOriginal.addAll(listaDispositivos);
     }
 
-    public ListaDispositivosAdapter(){}
-
     public void filtrado(String txtBuscar){
         int size = txtBuscar.length();
         if(size == 0){
