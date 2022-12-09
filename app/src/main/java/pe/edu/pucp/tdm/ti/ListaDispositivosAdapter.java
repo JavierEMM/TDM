@@ -52,7 +52,7 @@ public class ListaDispositivosAdapter extends RecyclerView.Adapter<ListaDisposit
         }else{
             listaDispositivos.clear();
             for(DispositivoDTO d : listaOriginal){
-                if(d.getNombre().toLowerCase().contains(txtBuscar)){
+                if(d.getNombre().toLowerCase().contains(txtBuscar.toLowerCase())){
                     listaDispositivos.add(d);
                 }
             }

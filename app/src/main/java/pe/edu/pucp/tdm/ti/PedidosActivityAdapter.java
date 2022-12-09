@@ -42,7 +42,7 @@ public class PedidosActivityAdapter extends RecyclerView.Adapter<PedidosActivity
         }else{
             listaPedidos.clear();
             for(PedidoDTO d : listaOriginal){
-                if(d.getNombreDispositivo().toLowerCase().contains(txtBuscar)){
+                if(d.getNombreDispositivo().toLowerCase().contains(txtBuscar.toLowerCase())){
                     listaPedidos.add(d);
                 }
             }
