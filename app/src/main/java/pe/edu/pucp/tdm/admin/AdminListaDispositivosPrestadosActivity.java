@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -130,6 +131,15 @@ public class AdminListaDispositivosPrestadosActivity extends AppCompatActivity i
         RecyclerView recyclerView = findViewById(R.id.recycleViewDispositivosUser);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(AdminListaDispositivosPrestadosActivity.this));
+
+        Button btnDetalle = findViewById(R.id.btnDetallesPrestados);
+        btnDetalle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminListaDispositivosPrestadosActivity.this,AdminDispositivoMasPrestadoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
