@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,17 +27,36 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
+import pe.edu.pucp.tdm.dto.PedidoDTO;
 import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 import pe.edu.pucp.tdm.ti.ListaDispositivosAdapter;
 
-public class ClienteListaDispositivosActivity extends AppCompatActivity {
-    FirebaseDatabase firebaseDatabase;
+public class ClienteListaDispositivosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+    FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
     ArrayList<DispositivoDTO> listaDispositivo = new ArrayList<>();
-
+    ClienteListaDispositivosAdapter adapter = new ClienteListaDispositivosAdapter();
+    DatabaseReference databaseReference = firebaseDatabase.getReference();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        databaseReference.child("dispositivos").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                listaDispositivo.clear();
+                for(DataSnapshot children : dataSnapshot.getChildren()){
+                    DispositivoDTO dispositivoDTO = children.getValue(DispositivoDTO.class);
+                    listaDispositivo.add(dispositivoDTO);
+                }
+                adapter.setListaDispositivos(listaDispositivo);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
 
     @Override
@@ -42,23 +64,19 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente_lista_dispositivos);
 
-
         firebaseDatabase= FirebaseDatabase.getInstance();
-
+        SearchView searchView = findViewById(R.id.searchViewClienteDisp);
+        searchView.setOnQueryTextListener(ClienteListaDispositivosActivity.this);
         RecyclerView recyclerView = findViewById(R.id.clienteRecycleDisp);
-        ClienteListaDispositivosAdapter adapter = new ClienteListaDispositivosAdapter();
+        adapter = new ClienteListaDispositivosAdapter();
         adapter.setContext(ClienteListaDispositivosActivity.this);
-
         DatabaseReference databaseReference = firebaseDatabase.getReference().child("dispositivos");
-
-        Button button = findViewById(R.id.button8);
-
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot children : snapshot.getChildren() ){
                     DispositivoDTO actividad = children.getValue(DispositivoDTO.class);
+                    actividad.setId(children.getKey());
                     listaDispositivo.add(actividad);
                     adapter.setListaDispositivos(listaDispositivo);
                     recyclerView.setAdapter(adapter);
@@ -79,12 +97,14 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_ti,menu);
+        getMenuInflater().inflate(R.menu.menu_cliente,menu);
         return true;
     }
 
@@ -98,5 +118,16 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        adapter.filtrado(s);
+        return false;
     }
 }

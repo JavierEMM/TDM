@@ -5,7 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
@@ -19,7 +25,6 @@ public class ClientePedidoAceptadoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cliente_pedido_aceptado);
         Intent intent = getIntent();
         PedidoDTO pedido =(PedidoDTO) intent.getSerializableExtra("pedido");
-
 
         TextView nombre = findViewById(R.id.textViewNombreDetalles2);
         nombre.setText(pedido.getNombreDispositivo());
