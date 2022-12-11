@@ -71,7 +71,7 @@ public class UbicacionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pedido.setLatitud(String.valueOf(selectedLat));
-                pedido.setLatitud(String.valueOf(selectedLong));
+                pedido.setLongitud(String.valueOf(selectedLong));
                 pedido.setEstado("aceptado");
                 databaseReference.child("pedidos").child(pedido.getId()).setValue(pedido).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
