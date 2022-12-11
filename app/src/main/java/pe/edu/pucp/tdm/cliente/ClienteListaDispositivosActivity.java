@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +32,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import pe.edu.pucp.tdm.R;
+import pe.edu.pucp.tdm.admin.AdminMainActivity;
 import pe.edu.pucp.tdm.dto.DispositivoDTO;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
+import pe.edu.pucp.tdm.login.LoginActivity;
 import pe.edu.pucp.tdm.ti.ListaDispositivosActivity;
 import pe.edu.pucp.tdm.ti.ListaDispositivosAdapter;
 
@@ -41,6 +44,7 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity implemen
     ArrayList<DispositivoDTO> listaDispositivo = new ArrayList<>();
     ClienteListaDispositivosAdapter adapter = new ClienteListaDispositivosAdapter();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     @Override
     protected void onResume() {
         super.onResume();
@@ -115,6 +119,11 @@ public class ClienteListaDispositivosActivity extends AppCompatActivity implemen
             case R.id.btnPedidos:
                 Intent intent = new Intent(ClienteListaDispositivosActivity.this, ClienteListaPedidosActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.btnCerrar:
+                firebaseAuth.signOut();
+                Intent intent2 =  new Intent(ClienteListaDispositivosActivity.this, LoginActivity.class);
+                startActivity(intent2);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -33,6 +33,7 @@ import java.util.List;
 import pe.edu.pucp.tdm.R;
 import pe.edu.pucp.tdm.adapters.ListaClientePedidosAdapter;
 import pe.edu.pucp.tdm.dto.PedidoDTO;
+import pe.edu.pucp.tdm.login.LoginActivity;
 
 public class ClienteListaPedidosActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class ClienteListaPedidosActivity extends AppCompatActivity {
     ArrayList<PedidoDTO> listaPedidos = new ArrayList<PedidoDTO>();
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ListaClientePedidosAdapter adapter = new ListaClientePedidosAdapter();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     @Override
     protected void onResume() {
         super.onResume();
@@ -131,6 +133,11 @@ public class ClienteListaPedidosActivity extends AppCompatActivity {
             case R.id.btnListarDispositivos:
                 Intent intent = new Intent(ClienteListaPedidosActivity.this, ClienteListaDispositivosActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.btnCerrar:
+                firebaseAuth.signOut();
+                Intent intent2 =  new Intent(ClienteListaPedidosActivity.this, LoginActivity.class);
+                startActivity(intent2);
                 return true;
         }
      return super.onOptionsItemSelected(item);
