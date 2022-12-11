@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,7 +27,7 @@ public class MapaRecojoActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa_recojo);
         Intent intent = getIntent();
-        PedidoDTO pedido = (PedidoDTO) intent.getSerializableExtra("pedido");
+        PedidoDTO pedido =(PedidoDTO) intent.getSerializableExtra("pedido");
         pedidoDTO=pedido;
         SupportMapFragment mapFragment = (SupportMapFragment)  getSupportFragmentManager()
                 .findFragmentById(R.id.mapRecojo);
@@ -37,7 +38,9 @@ public class MapaRecojoActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap= googleMap;
-        LatLng position = new LatLng(Integer.parseInt(pedidoDTO.getLatitud().toString()) ,Integer.parseInt(pedidoDTO.getLongitud().toString()));
+        Log.d("mgs",pedidoDTO.getLatitud());
+        Log.d("mgs",pedidoDTO.getLongitud());
+        LatLng position = new LatLng(Double.parseDouble(pedidoDTO.getLatitud()),Double.parseDouble(pedidoDTO.getLongitud()));
         mMap.addMarker(new MarkerOptions()
                 .position(position)
                 .title("Lugar de recojo"));

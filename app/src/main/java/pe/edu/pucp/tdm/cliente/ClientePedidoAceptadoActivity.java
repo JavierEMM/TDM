@@ -45,8 +45,9 @@ public class ClientePedidoAceptadoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(ClientePedidoAceptadoActivity.this,MapaRecojoActivity.class);
                 intent.putExtra("pedido",pedido);
+                startActivity(intent);
             }
         });
 
