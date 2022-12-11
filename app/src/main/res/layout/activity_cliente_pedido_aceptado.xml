@@ -67,7 +67,7 @@
         app:layout_constraintVertical_bias="0.747" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/btnVerMapaRecojo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ver Mapa"

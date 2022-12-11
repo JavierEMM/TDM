@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +40,15 @@ public class ClientePedidoAceptadoActivity extends AppCompatActivity {
         programas.setText(pedido.getProgramas());
         TextView otros = findViewById(R.id.textViewOtrosAceptados);
         otros.setText(pedido.getOtros());
+
+        Button btn = findViewById(R.id.btnVerMapaRecojo);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("pedido",pedido);
+            }
+        });
 
 
 
