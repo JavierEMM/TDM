@@ -45,6 +45,7 @@ public class AgregarTIActivity extends AppCompatActivity {
     NavigationView navigationView;
     ActionBarDrawerToggle actionBarDrawerToggle;
     FirebaseAuth firebaseAuth;
+    FirebaseAuth firebaseAuth2;
     FirebaseDatabase firebaseDatabase;
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
@@ -75,6 +76,7 @@ public class AgregarTIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_tiactivity);
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth2 = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         firebaseStorage = FirebaseStorage.getInstance();
