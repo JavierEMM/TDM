@@ -44,6 +44,7 @@ public class MapaRecojoActivity extends AppCompatActivity implements OnMapReadyC
         mMap.addMarker(new MarkerOptions()
                 .position(position)
                 .title("Lugar de recojo"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16.0f));
     }
 }
